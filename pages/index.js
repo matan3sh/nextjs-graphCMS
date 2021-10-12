@@ -7,9 +7,9 @@ const Home = ({ videos }) => {
 
 export const getStaticProps = async () => {
   const url = process.env.ENDPOINT;
-  const client = new GraphQLClient(url, {
+  const graphQLClient = new GraphQLClient(url, {
     headers: {
-      Authorization: process.env.GRAPH_CMS_TOKEN,
+      Authorization: `Bearer ${process.env.GRAPH_CMS_TOKEN}`,
     },
   });
 
@@ -33,9 +33,8 @@ export const getStaticProps = async () => {
     }
   `;
 
-  const data = await client.request(query);
+  const data = await graphQLClient.request(query);
   const videos = data.videos;
-
   return {
     props: {
       videos,
